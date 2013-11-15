@@ -107,13 +107,16 @@ class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OAuth1
 		}
 
 		$contacts = array();
-
+		
 		foreach( $response->contacts->contact as $item ) {
 			$uc = new Hybrid_User_Contact();
 
 			$uc->identifier   = $this->selectGUID( $item );
 			$uc->email        = $this->selectEmail( $item->fields );
 			$uc->displayName  = $this->selectName( $item->fields );
+			// rrr
+			$uc->yahooID      = $this->selectYahooID( $item->fields ); 
+			if($uc->yahooID != '' && $uc->email == '') $uc->email = $uc->yahooID.'@yahoo.com';
 			$uc->photoURL     = $this->selectPhoto( $item->fields );
 
 			$contacts[] = $uc;
@@ -215,6 +218,13 @@ class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OAuth1
 		return ($s)?(property_exists($s,'image')):"";
 	}
 
+	// rrr
+	function selectYahooID( $v )
+	{
+		$s = $this->select($v, 'yahooid');
+		return ($s)?$s->value:"";
+	}
+	
 	function selectEmail( $v )
 	{
 		$s = $this->select($v, 'email');
