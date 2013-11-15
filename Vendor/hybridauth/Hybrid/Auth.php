@@ -291,9 +291,11 @@ class Hybrid_Auth
 	{
 		$idps = array();
 
-		foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
-			if( Hybrid_Auth::isConnectedWith( $idpid ) ){
-				$idps[] = $idpid;
+		if(isset(Hybrid_Auth::$config["providers"]) && is_array(Hybrid_Auth::$config["providers"])) {
+			foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
+				if( Hybrid_Auth::isConnectedWith( $idpid ) ){
+					$idps[] = $idpid;
+				}
 			}
 		}
 
