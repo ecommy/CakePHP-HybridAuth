@@ -59,7 +59,7 @@ class HybridAuthAuthenticate extends FormAuthenticate {
  * @param  CakeRequest $request CakeRequest instance
  * @return boolean|array User array or false
  */
-	public function getUser($request) {
+	public function getUser(CakeRequest $request) {
 		$this->_init();
 		$idps = $this->hybridAuth->getConnectedProviders();
 		foreach ($idps as $provider) {
@@ -186,7 +186,7 @@ class HybridAuthAuthenticate extends FormAuthenticate {
  *
  * @return void
  */
-	public function logout() {
+	public function logout($user = null) {
 		$this->_init();
 		$this->hybridAuth->logoutAllProviders();
 	}
